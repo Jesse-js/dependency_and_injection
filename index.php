@@ -1,6 +1,7 @@
 <?php 
 
 require_once __DIR__ . '/Cliente.php';
+require_once __DIR__ . '/CepService.php';
 
-$cliente = new Cliente();
-$cliente->cadastrar();
+
+(new Cliente(new CepService))->cadastrar();
