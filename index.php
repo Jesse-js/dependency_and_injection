@@ -11,6 +11,7 @@ require_once __DIR__ . '/XLSGenerator.php';
 
 require_once __DIR__ . '/Venda.php';
 require_once __DIR__ . '/Mailer.php';
+require_once __DIR__ . '/Container.php';
 
 echo (new Cliente(new CepServiceFake))->cadastrar();
 echo '<br>';
@@ -25,17 +26,27 @@ echo '<hr>';
 echo '<br>';
 
 
-$pdf = new PDFGenerator();
 
-$mailer = new Mailer([
-    'host' => 'smtp.gmail.com',
-    'port' => 587,
-    'auth' => true,
-    'username' => 'username',
-    'password' => 'password',
-    'secure' => 'tls',
-    'debug' => true,
-    'email' => '4gU4M@example.com',
-]);
 
-(new Venda($pdf, $mailer))->notificar();
+$app = new Container;
+
+$app->bind('venda', function () {
+
+    $pdf = new PDFGenerator();
+
+    $mailer = new Mailer([
+        'host' => 'smtp.gmail.com',
+        'port' => 587,
+        'auth' => true,
+        'username' => 'username',
+        'password' => 'password',
+        'secure' => 'tls',
+        'debug' => true,
+        'email' => '4gU4M@example.com',
+    ]);
+
+    return new Venda($pdf, $mailer);
+});
+
+$venda = $app->make('venda');
+$venda->notificar();
