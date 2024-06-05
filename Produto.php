@@ -1,16 +1,15 @@
 <?php 
-require_once __DIR__ . '/PDFGenerator.php';
-
+require_once __DIR__ . '/RelatorioGenerator.php';
 class Produto
 {
     public function __construct(
-        protected PDFGenerator $pdf
+        protected RelatorioGenerator $relatorioGenerator
     ) {
-        $this->pdf = $pdf;
+        $this->relatorioGenerator = $relatorioGenerator;
     }
     public function gerarRelatorio(): string 
     {
         $produtos = ['produto 1', 'produto 2'];
-        return $this->pdf->gerarPDF($produtos);
+        return $this->relatorioGenerator->gerar($produtos);
     }
 }
