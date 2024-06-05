@@ -8,11 +8,11 @@ class Cliente
         //injeção de dependência na classe cliente do CepService
         $this->cepService = $cepService;
     }
-    public function cadastrar(): void
+    public function cadastrar(): string
     {
         $cep = '11111-100';
         //$cepService = new CepService(); //com a injeção de dependência excluo essa instanciação do CepService
-        echo $this->cepService->buscarCep($cep);
+        return $this->cepService->buscarCep($cep);
 
         //gravar no banco
     }
